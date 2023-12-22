@@ -425,10 +425,12 @@ class _CardSwiperState<T extends Widget> extends State<CardSwiper>
       final direction = _cardAnimation.top.isNegative
           ? CardSwiperDirection.top
           : CardSwiperDirection.bottom;
-      if (direction == CardSwiperDirection.top &&
-              widget.allowedSwipeDirection.up ||
-          direction == CardSwiperDirection.bottom &&
-              widget.allowedSwipeDirection.down) {
+      // Gérer spécifiquement le cas du swipe vers le bas
+      if (direction == CardSwiperDirection.bottom) {
+        // Remettre la carte à sa position initiale
+        _goBack();
+      } else if (direction == CardSwiperDirection.top &&
+          widget.allowedSwipeDirection.up) {
         _swipe(direction);
       } else {
         _goBack();
